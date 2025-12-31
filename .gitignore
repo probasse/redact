@@ -1,0 +1,12 @@
+venv/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+serviceAccountKey.json
+*.log
+uploads/
+*.tar
+.DS_Store
+*.pdf

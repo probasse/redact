@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Secure PDF Redactor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Stripe JS -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+</head>
+
+<body>
+    <div class="container pricing-container">
+        <header class="app-header">
+            <div class="logo">
+                <a href="/"
+                    style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-user-secret"></i> SecureRedact
+                </a>
+            </div>
+            <div class="auth-container">
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme"
+                    style="margin-right: 12px; font-size: 1.25rem;">
+                    <i class="fa-solid fa-sun-bright"></i>
+                </button>
+                <div id="user-info" style="display: none;">
+                    <img id="user-avatar" src="" alt="User" class="avatar">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="icon-btn" title="Logout" style="margin-left: 8px;"><i
+                            class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+            </div>
+        </header>
+
+        <div class="text-center" style="margin-bottom: 3rem;">
+            <h1>Upgrade Your Plan</h1>
+            <p style="color: var(--subtext-color);">Choose the secure redaction plan that fits your needs.</p>
+        </div>
+
+        <div class="pricing-grid">
+            <!-- Starter -->
+            <div class="pricing-card">
+                <h3>Starter</h3>
+                <div class="price">$4.99<span>/mo</span></div>
+                <ul class="features">
+                    <li><i class="fa-solid fa-check"></i> 50 Documents / mo</li>
+                    <li><i class="fa-solid fa-check"></i> Secure Redaction</li>
+                    <li><i class="fa-solid fa-check"></i> Basic Support</li>
+                </ul>
+                <button class="primary-btn checkout-btn" data-plan="STARTER">Select Starter</button>
+            </div>
+
+            <!-- Lite -->
+            <div class="pricing-card">
+                <h3>Lite</h3>
+                <div class="price">$9.99<span>/mo</span></div>
+                <ul class="features">
+                    <li><i class="fa-solid fa-check"></i> 100 Documents / mo</li>
+                    <li><i class="fa-solid fa-check"></i> Priority Processing</li>
+                    <li><i class="fa-solid fa-check"></i> Custom Patterns</li>
+                </ul>
+                <button class="primary-btn checkout-btn" data-plan="LITE">Select Lite</button>
+            </div>
+
+            <!-- Pro -->
+            <div class="pricing-card popular" style="border-color: var(--primary-color);">
+                <div class="badge">Most Popular</div>
+                <h3>Pro</h3>
+                <div class="price">$19.99<span>/mo</span></div>
+                <ul class="features">
+                    <li><i class="fa-solid fa-check"></i> 1000 Documents / mo</li>
+                    <li><i class="fa-solid fa-check"></i> Advanced Formatting</li>
+                    <li><i class="fa-solid fa-check"></i> 24/7 Support</li>
+                </ul>
+                <button class="primary-btn checkout-btn" data-plan="PRO">Select Pro</button>
+            </div>
+
+            <!-- Enterprise -->
+            <div class="pricing-card">
+                <h3>Enterprise</h3>
+                <div class="price">$49.99<span>/mo</span></div>
+                <ul class="features">
+                    <li><i class="fa-solid fa-check"></i> Unlimited Documents</li>
+                    <li><i class="fa-solid fa-check"></i> API Access</li>
+                    <li><i class="fa-solid fa-check"></i> Dedicated Account Mgr</li>
+                </ul>
+                <button class="primary-btn checkout-btn" data-plan="ENTERPRISE">Select Enterprise</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('theme-toggle');
+            const body = document.body;
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+            if (savedTheme === 'light' || (!savedTheme && systemPrefersLight)) {
+                body.classList.add('light-mode');
+                updateThemeIcon(true);
+            } else {
+                updateThemeIcon(false);
+            }
+
+            themeToggle.addEventListener('click', () => {
+                body.classList.toggle('light-mode');
+                const isLight = body.classList.contains('light-mode');
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+                updateThemeIcon(isLight);
+            });
+
+            function updateThemeIcon(isLight) {
+                const icon = themeToggle.querySelector('i');
+                icon.className = isLight ? 'fa-solid fa-moon' : 'fa-solid fa-sun-bright';
+            }
+        });
+
+        // Firebase Config (Keep separate or inject via template variables in real app)
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQA0Wd0QabI_-KgwYQRc-pPuQDdbUYgrE",
+            authDomain: "redact-63681.firebaseapp.com",
+            projectId: "redact-63681",
+            storageBucket: "redact-63681.firebasestorage.app",
+            messagingSenderId: "548777850356",
+            appId: "1:548777850356:web:10260069e7a9729de8f5a1"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        let currentUser = null;
+
+        // Stripe Public Key (Replace with your Publishable Key)
+        const stripe = Stripe("{{ stripe_publishable_key }}");
+
+        // Injected from Flask
+        const PRICE_ID_STARTER = "{{ price_id_starter }}";
+        const PRICE_ID_LITE = "{{ price_id_lite }}";
+        const PRICE_ID_PRO = "{{ price_id_pro }}";
+        const PRICE_ID_ENTERPRISE = "{{ price_id_enterprise }}";
+
+        // Price IDs (These should match what is in .env on server, but mapped here)
+        // Hardcoding here for demo, but ideally injected
+        const PRICE_IDS = {
+            'STARTER': PRICE_ID_STARTER,
+            'LITE': PRICE_ID_LITE,
+            'PRO': PRICE_ID_PRO,
+            'ENTERPRISE': PRICE_ID_ENTERPRISE
+        };
+
+        auth.onAuthStateChanged(user => {
+            currentUser = user;
+            if (user) {
+                document.getElementById('user-info').style.display = 'flex';
+                document.getElementById('user-avatar').src = user.photoURL;
+                document.getElementById('user-name').textContent = user.displayName;
+
+                // Logout Logic
+                const logoutBtn = document.getElementById('logout-btn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', () => {
+                        auth.signOut().then(() => {
+                            window.location.href = '/';
+                        });
+                    });
+                }
+            } else {
+                window.location.href = '/'; // Redirect if not logged in
+            }
+        });
+
+        document.querySelectorAll('.checkout-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                const plan = btn.getAttribute('data-plan');
+                if (!currentUser) return alert("Please sign in first.");
+
+                // Get ID Token
+                const token = await currentUser.getIdToken();
+
+                fetch('/create-checkout-session', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        priceId: PRICE_IDS[plan], // You need to replace these with real IDs
+                        email: currentUser.email,
+                        uid: currentUser.uid
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.error) {
+                            alert("Error: " + data.error);
+                        } else {
+                            return stripe.redirectToCheckout({ sessionId: data.sessionId });
+                        }
+                    })
+                    .then(result => {
+                        if (result.error) {
+                            alert(result.error.message);
+                        }
+                    })
+                    .catch(err => console.error("Checkout Error:", err));
+            });
+        });
+    </script>
+</body>
+
+</html>

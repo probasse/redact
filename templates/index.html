@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure PDF Redactor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Google Fonts for premium typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Firebase SDKs (Compat) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <!-- PDF Processing Libraries (Client-Side) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script>
+        // Set worker source for PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Auth Header -->
+        <header class="app-header">
+            <div class="logo">
+                <a href="/"
+                    style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-user-secret"></i> SecureRedact
+                </a>
+            </div>
+            <div class="auth-container">
+                <!-- Usage Dashboard (Hidden until logged in) -->
+                <div id="usage-dashboard" style="display: none;">
+                    <button id="user-plan-badge" class="plan-badge" style="display:none;">Free</button>
+                    <div class="usage-pill">
+                        <span id="usage-count">0</span> / <span id="usage-limit">0</span> Docs
+                    </div>
+                    <span id="usage-validity" class="validity-span" style="display:none;"></span>
+                    <a href="/pricing" id="upgrade-link" class="upgrade-link">Upgrade</a>
+                    <button id="cancel-sub-btn" class="text-danger-hover"
+                        style="display:none; background:none; border:none; color: var(--subtext-color); font-size: 0.8rem; cursor:pointer; text-decoration: underline;">Cancel</button>
+                </div>
+
+                <div id="user-info" style="display: none;">
+                    <img id="user-avatar" src="" alt="User" class="avatar">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="icon-btn" title="Logout"><i
+                            class="fa-solid fa-right-from-bracket"></i></button>
+                </div>
+                <!-- Theme Toggle -->
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+                    <i class="fa-solid fa-sun-bright"></i> <!-- Default to Sun (for dark mode) -->
+                </button>
+                <button id="login-btn" class="primary-btn sm-btn"><i class="fa-brands fa-google"></i> Sign In</button>
+            </div>
+        </header>
+
+        <div class="header">
+            <h1>Secure PDF Redactor</h1>
+            <p>Protect sensitive information with local regex-based redaction</p>
+        </div>
+
+        <!-- Login Screen Gate -->
+        <div id="login-screen" class="login-screen">
+            <div class="login-card">
+                <i class="fa-solid fa-lock login-icon"></i>
+                <h2>Authentication Required</h2>
+                <p>Please sign in to access the secure redaction tools and your custom patterns.</p>
+                <button id="main-login-btn" class="primary-btn"><i class="fa-brands fa-google"></i> Sign In with
+                    Google</button>
+            </div>
+        </div>
+
+        <!-- Main App Content (Hidden by default) -->
+        <div id="app-content" style="display: none;">
+            <main>
+                <div class="upload-area" id="drop-zone">
+                    <div class="icon-container">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <h3>Drag & Drop your PDF(s) here</h3>
+                    <p>or <span class="browse-btn">browse files</span></p>
+                    <input type="file" id="file-input" accept=".pdf" multiple hidden>
+                </div>
+
+                <div class="settings-container" id="settings-container">
+                    <div class="settings-header" id="settings-header">
+                        <h4><i class="fa-solid fa-sliders"></i> Redaction Patterns</h4>
+                        <i class="fa-solid fa-chevron-down" id="settings-chevron"></i>
+                    </div>
+                    <div class="patterns-grid" id="patterns-grid" style="display: none;">
+                        <!-- Checkboxes will be injected here -->
+                    </div>
+                    <!-- Add Custom Pattern Button -->
+                    <div class="add-pattern-container">
+                        <button id="open-pattern-modal-btn" class="secondary-btn"><i class="fa-solid fa-plus"></i> Add
+                            Custom Pattern</button>
+                    </div>
+                </div>
+
+                <!-- Preview Modal -->
+                <div id="preview-modal" class="modal">
+                    <div class="modal-content preview-modal-content">
+                        <div class="modal-header">
+                            <h2>Redacted Preview</h2>
+                            <span class="close-modal" id="close-preview">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <iframe id="pdf-preview-frame" frameborder="0"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pattern Modal -->
+                <div id="pattern-modal" class="modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2>Add Custom Pattern</h2>
+                            <span class="close-modal">&times;</span>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="custom-name">Pattern Name</label>
+                                <input type="text" id="custom-name" placeholder="e.g. CEO Name">
+                            </div>
+
+                            <!-- Pattern Type Selection -->
+                            <div class="form-group">
+                                <label>Redaction Type</label>
+                                <div class="toggle-container">
+                                    <button id="type-exact" class="toggle-btn active">Exact Phrase</button>
+                                    <button id="type-regex" class="toggle-btn">Regular Expression</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group" id="exact-input-group">
+                                <label for="exact-phrase">Phrase to Redact</label>
+                                <input type="text" id="exact-phrase" placeholder="e.g. John Doe">
+                            </div>
+
+                            <div class="form-group" id="regex-input-group" style="display: none;">
+                                <label for="custom-sample">Sample Text (for test)</label>
+                                <div class="input-with-btn">
+                                    <input type="text" id="custom-sample" placeholder="e.g. EMP-12345">
+                                    <button id="generate-regex-btn" class="secondary-btn">Generate</button>
+                                </div>
+                                <label for="custom-regex" style="margin-top: 10px;">Regex Pattern</label>
+                                <input type="text" id="custom-regex" placeholder="Generated regex will appear here">
+                            </div>
+
+                            <button id="add-custom-pattern-btn" class="primary-btn">Add Pattern</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Progress Section -->
+                <div class="status-container" id="status-container" style="display: none;">
+                    <h4>Processing Files...</h4>
+                    <div id="file-progress-list" class="file-progress-list">
+                        <!-- Dynamic items will be added here -->
+                    </div>
+                </div>
+
+                <div class="result-container" id="result-container" style="display: none;">
+                    <div class="success-icon">
+                        <i class="fa-solid fa-check-circle"></i>
+                    </div>
+                    <h3>Redaction Complete!</h3>
+                    <p>Your document has been processed successfully.</p>
+                    <p id="redaction-count" style="color: var(--primary-color); font-weight: 600; margin: 10px 0;"></p>
+                    <a href="#" id="download-link" class="download-btn">
+                        <i class="fa-solid fa-download"></i> Download Redacted PDF
+                    </a>
+                    <button class="reset-btn" id="reset-btn">Redact Another File</button>
+                </div>
+            </main>
+
+            <footer>
+                <p>Secure & Private. Files are processed entirely in your browser. No data leaves your device.</p>
+            </footer>
+        </div> <!-- End app-content -->
+
+    </div> <!-- End container -->
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>

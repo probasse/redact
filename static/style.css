@@ -1,0 +1,812 @@
+:root {
+    /* MD3 Typography */
+    --font-family: 'Outfit', sans-serif;
+
+    /* PALETTE: VIOLET (Primary) */
+    --md-sys-color-primary: #b0c6ff;
+    --md-sys-color-on-primary: #002d6f;
+    --md-sys-color-primary-container: #19438f;
+    --md-sys-color-on-primary-container: #d9e2ff;
+
+    /* Dark Mode Defaults (Base) */
+    --md-sys-color-background: #0b1120;
+    /* Deep Navy */
+    --md-sys-color-on-background: #e2e2e6;
+
+    --md-sys-color-surface: #0b1120;
+    --md-sys-color-surface-1: #1a1f2e;
+    /* +5% tint */
+    --md-sys-color-surface-2: #232839;
+    /* +8% tint */
+    --md-sys-color-surface-3: #2d3243;
+    /* +11% tint */
+    --md-sys-color-surface-4: #303546;
+    /* +12% tint */
+    --md-sys-color-surface-5: #363b4d;
+    /* +14% tint */
+
+    --md-sys-color-on-surface: #e2e2e6;
+    --md-sys-color-on-surface-variant: #c4c6d0;
+    --md-sys-color-outline: #8e9099;
+    --md-sys-color-outline-variant: #44474f;
+
+    --md-sys-color-error: #ffb4ab;
+    --md-sys-color-on-error: #690005;
+    --md-sys-color-error-container: #93000a;
+    --md-sys-color-on-error-container: #ffdad6;
+
+    --md-sys-color-success: #bcecba;
+    --md-sys-color-on-success: #0b3d12;
+    --md-sys-color-success-container: #255428;
+
+    /* Shapes */
+    --md-sys-shape-corner-small: 8px;
+    --md-sys-shape-corner-medium: 12px;
+    --md-sys-shape-corner-large: 16px;
+    --md-sys-shape-corner-extra-large: 28px;
+    --md-sys-shape-corner-full: 50% 50% 50% 50%;
+
+    /* Transitions */
+    --md-sys-motion-easing-standard: cubic-bezier(0.2, 0.0, 0, 1.0);
+    --md-sys-motion-duration-short: 200ms;
+}
+
+/* Light Mode Overrides */
+body.light-mode {
+    --md-sys-color-primary: #375ba9;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-primary-container: #d9e2ff;
+    --md-sys-color-on-primary-container: #001944;
+
+    --md-sys-color-background: #fdfbff;
+    --md-sys-color-on-background: #1a1b1f;
+
+    --md-sys-color-surface: #fdfbff;
+    --md-sys-color-surface-1: #f0f3fa;
+    --md-sys-color-surface-2: #ebeff9;
+    --md-sys-color-surface-3: #e5ebf7;
+    --md-sys-color-surface-4: #e3e9f6;
+    --md-sys-color-surface-5: #dfe6f4;
+
+    --md-sys-color-on-surface: #1a1b1f;
+    --md-sys-color-on-surface-variant: #44474f;
+    --md-sys-color-outline: #74777f;
+    --md-sys-color-outline-variant: #c4c6d0;
+
+    --md-sys-color-error: #ba1a1a;
+    --md-sys-color-on-error: #ffffff;
+    --md-sys-color-error-container: #ffdad6;
+    --md-sys-color-on-error-container: #410002;
+
+    --md-sys-color-success: #2e6a31;
+    --md-sys-color-on-success: #ffffff;
+    --md-sys-color-success-container: #bcecba;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--md-sys-color-background);
+    color: var(--md-sys-color-on-background);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1.5;
+    transition: background-color var(--md-sys-motion-duration-short) ease, color var(--md-sys-motion-duration-short) ease;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+}
+
+/* --- COMPONENTS --- */
+
+/* Header (App Bar) */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    /* Increased from 2rem */
+    padding: 1rem 1.5rem;
+    background-color: var(--md-sys-color-surface-2);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    height: 72px;
+    /* Material Standard */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo i {
+    color: var(--md-sys-color-primary);
+    font-size: 1.5rem;
+}
+
+.auth-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Dashboard Stats */
+#usage-dashboard {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-right: 16px;
+    border-right: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.usage-pill {
+    background-color: var(--md-sys-color-surface-5);
+    color: var(--md-sys-color-primary);
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+/* Badges */
+.plan-badge {
+    /* Base */
+    padding: 6px 12px;
+    border-radius: 100px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+.badge-paid {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+}
+
+.badge-canceling {
+    background-color: var(--md-sys-color-error-container);
+    color: var(--md-sys-color-on-error-container);
+}
+
+.validity-text {
+    font-size: 0.75rem;
+    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 500;
+    margin-left: 8px;
+}
+
+/* User Profile */
+#user-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--md-sys-color-surface-1);
+    padding: 4px 8px 4px 8px;
+    /* Slim pill */
+    border-radius: 100px;
+    border: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+#user-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-left: 4px;
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Buttons */
+.primary-btn {
+    height: 40px;
+    padding: 0 24px;
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    border: none;
+    border-radius: 100px;
+    /* Full pill */
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: box-shadow 0.2s;
+}
+
+.primary-btn:hover {
+    box-shadow: 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+    /* Elevation 1 */
+}
+
+.primary-btn.sm-btn {
+    height: 36px;
+    padding: 0 18px;
+}
+
+.secondary-btn {
+    height: 40px;
+    padding: 0 24px;
+    background-color: transparent;
+    color: var(--md-sys-color-primary);
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.secondary-btn:hover {
+    background-color: rgba(var(--md-sys-color-primary), 0.08);
+    /* Hover state */
+}
+
+.text-btn {
+    background: none;
+    border: none;
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.text-btn:hover {
+    background-color: var(--md-sys-color-surface-4);
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: none;
+    color: var(--md-sys-color-on-surface-variant);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.25rem;
+}
+
+.icon-btn:hover {
+    background-color: var(--md-sys-color-surface-4);
+    color: var(--md-sys-color-on-surface);
+}
+
+/* Main Content Card */
+main {
+    background-color: var(--md-sys-color-surface-1);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    padding: 3rem;
+    position: relative;
+    /* No border, rely on tonal difference */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+header h1 {
+    font-size: 3.5rem;
+    /* Display Small/Medium */
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    color: var(--md-sys-color-on-background);
+}
+
+header p {
+    font-size: 1.125rem;
+    color: var(--md-sys-color-on-surface-variant);
+}
+
+/* Upload Area */
+.upload-area {
+    background-color: var(--md-sys-color-surface-2);
+    border: 2px dashed var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-large);
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+}
+
+.upload-area:hover,
+.upload-area.drag-over {
+    background-color: var(--md-sys-color-surface-4);
+    border-color: var(--md-sys-color-primary);
+}
+
+.upload-area .icon-container {
+    color: var(--md-sys-color-primary);
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* Login Screen */
+.login-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+}
+
+.login-card {
+    background-color: var(--md-sys-color-surface-2);
+    padding: 3rem;
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+    /* Optional: Elevation for better separation */
+    box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+    /* Elevation 2 approx */
+}
+
+.login-icon {
+    font-size: 3rem;
+    color: var(--md-sys-color-primary);
+    margin-bottom: 1.5rem;
+}
+
+/* Forms & Inputs */
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.875rem;
+}
+
+.form-group input {
+    width: 100%;
+    height: 56px;
+    padding: 0 16px;
+    background-color: transparent;
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 4px;
+    /* Text Field curve is smaller */
+    color: var(--md-sys-color-on-surface);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+}
+
+.input-with-btn {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.input-with-btn input {
+    flex: 1;
+}
+
+.input-with-btn button {
+    height: 56px;
+    /* Match input height */
+    margin-top: 2px;
+    /* Slight visual adjustment if needed, but flex center should handle it */
+}
+
+/* Toggle Group */
+.toggle-container {
+    display: flex;
+    background-color: var(--md-sys-color-surface-2);
+    /* M3 Segmented Button container? No, custom switch */
+    border: 1px solid var(--md-sys-color-outline);
+    border-radius: 100px;
+    padding: 0;
+    overflow: hidden;
+    height: 40px;
+}
+
+.toggle-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.875rem;
+    border-right: 1px solid var(--md-sys-color-outline);
+}
+
+.toggle-btn:last-child {
+    border-right: none;
+}
+
+.toggle-btn.active {
+    background-color: var(--md-sys-color-secondary-container);
+    /* M3 choice */
+    background-color: rgba(var(--md-sys-color-primary), 0.12);
+    /* Custom */
+    color: var(--md-sys-color-primary);
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    align-items: center;
+    /* Flex centering */
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--md-sys-color-surface-3);
+    /* Surface 3 for Dialogs */
+    width: 90%;
+    max-width: 500px;
+    border-radius: 28px;
+    /* M3 Dialog radius */
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    border: none;
+    padding: 0;
+}
+
+.modal-header h2 {
+    font-size: 1.5rem;
+    /* Headline Small */
+    color: var(--md-sys-color-on-surface);
+}
+
+.close-modal {
+    font-size: 24px;
+    color: var(--md-sys-color-on-surface-variant);
+    cursor: pointer;
+}
+
+/* Patterns Grid */
+.pattern-item {
+    background-color: var(--md-sys-color-surface-2);
+    border-radius: var(--md-sys-shape-corner-medium);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Misc Utilities */
+.upgrade-link {
+    text-decoration: none;
+    color: var(--md-sys-color-primary);
+    font-weight: 500;
+    font-size: 0.875rem;
+}
+
+.upgrade-link:hover {
+    text-decoration: underline;
+}
+
+.status-icon {
+    color: var(--md-sys-color-primary);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.success-icon {
+    color: var(--md-sys-color-success);
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+/* Progress Bar */
+.progress-bar {
+    height: 4px;
+    background-color: var(--md-sys-color-surface-variant);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: var(--md-sys-color-primary);
+    width: 0;
+    transition: width 0.3s;
+}
+
+/* --- PRICING PAGE --- */
+.pricing-container {
+    max-width: 1200px;
+    /* Wider for 4 columns */
+    margin: 0 auto;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 2rem;
+}
+
+.pricing-card {
+    background-color: var(--md-sys-color-surface-2);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    padding: 2rem;
+    border: 1px solid var(--md-sys-color-outline-variant);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    position: relative;
+    /* Ensure height equality in grid */
+    height: 100%;
+}
+
+.pricing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.2);
+    background-color: var(--md-sys-color-surface-3);
+    border-color: var(--md-sys-color-primary);
+}
+
+/* Result Actions Wrapper */
+.result-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+/* --- MAIN CONTENT --- */
+.upload-area {
+    border: 2px dashed var(--md-sys-color-outline-variant);
+    border-radius: var(--md-sys-shape-corner-extra-large);
+    padding: 4rem 2rem;
+    text-align: center;
+    background-color: var(--md-sys-color-surface-1);
+    transition: border-color 0.2s, background-color 0.2s;
+    cursor: pointer;
+    margin-bottom: 3rem;
+    /* Increased spacing */
+}
+
+/* Settings Section */
+.settings-container {
+    margin-top: 2rem;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+    padding-top: 2rem;
+}
+
+.settings-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5rem 0;
+    /* Align touch target */
+    margin-bottom: 1rem;
+    user-select: none;
+}
+
+.settings-header h4 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--md-sys-color-on-surface);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.add-pattern-container {
+    margin-top: 1rem;
+    padding-left: 0;
+    /* Ensure alignment with header */
+}
+
+.pricing-card.popular {
+    background-color: var(--md-sys-color-surface-3);
+    border: 2px solid var(--md-sys-color-primary);
+}
+
+/* Badge for Popular card */
+.pricing-card .badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: var(--md-sys-color-primary-container);
+    color: var(--md-sys-color-on-primary-container);
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+}
+
+.pricing-card h3 {
+    font-size: 1.5rem;
+    color: var(--md-sys-color-on-surface);
+    margin-bottom: 0.5rem;
+}
+
+.pricing-card .price {
+    font-size: 2.75rem;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    margin: 1rem 0;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+}
+
+.pricing-card .price span {
+    font-size: 1rem;
+    color: var(--md-sys-color-on-surface-variant);
+    font-weight: 400;
+}
+
+.pricing-card .features {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 2rem 0;
+    width: 100%;
+    flex-grow: 1;
+    /* Push button to bottom */
+}
+
+.pricing-card .features li {
+    margin-bottom: 12px;
+    color: var(--md-sys-color-on-surface-variant);
+    display: flex;
+    gap: 12px;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.pricing-card .features li i {
+    color: var(--md-sys-color-primary);
+    margin-top: 4px;
+    /* Optical center */
+}
+
+/* Ensure buttons fill card width */
+/* Footer */
+footer {
+    text-align: center;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    color: var(--subtext-color);
+    font-size: 0.85rem;
+    opacity: 0.5;
+}
+
+/* --- MOBILE RESPONSIVENESS --- */
+@media (max-width: 768px) {
+
+    /* Layout */
+    .container,
+    .pricing-container {
+        padding: 1rem;
+        max-width: 100%;
+    }
+
+    /* Header */
+    .app-header {
+        flex-direction: column;
+        height: auto;
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    .auth-container {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        /* Tighter gap on mobile */
+    }
+
+    /* Typography */
+    header h1 {
+        font-size: 2.25rem;
+        /* Scale down from 3.5rem */
+    }
+
+    /* Grids */
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        /* Stack cards */
+    }
+
+    #patterns-grid {
+        grid-template-columns: 1fr;
+        /* Stack pattern items */
+    }
+
+    /* Pricing Cards */
+    .pricing-card {
+        padding: 1.5rem;
+        /* slightly less padding */
+    }
+
+    .pricing-card .price {
+        font-size: 2.25rem;
+    }
+
+    /* Forms */
+    .login-card {
+        padding: 2rem 1.5rem;
+        max-width: 100%;
+    }
+
+    .input-with-btn {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .input-with-btn button {
+        margin-top: 0;
+        width: 100%;
+    }
+
+    /* Dialogs */
+    .modal-content {
+        width: 95%;
+        margin: 0 auto;
+        padding: 1.25rem;
+        /* Less padding on mobile modal */
+        max-height: 90vh;
+        /* Prevent cut-off on small screens */
+        overflow-y: auto;
+    }
+}
