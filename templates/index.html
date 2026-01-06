@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure PDF Redactor</title>
+    <title>SecureRedact - AI-Powered PDF Redaction</title>
+    <meta name="description" content="Protect sensitive information with AI-powered PDF redaction. 100% client-side processing - your data never leaves your browser.">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!-- Google Fonts for premium typography -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Firebase SDKs (Compat) -->
@@ -62,24 +63,239 @@
             </div>
         </header>
 
-        <div class="header">
-            <h1>Secure PDF Redactor</h1>
-            <p>Protect sensitive information with local regex-based redaction</p>
-        </div>
+        <!-- ========== LANDING PAGE CONTENT ========== -->
+        <div id="landing-content">
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <i class="fa-solid fa-shield-check"></i> 100% Client-Side Processing
+                    </div>
+                    <h1 class="hero-title">Protect Sensitive Information with <span class="gradient-text">AI-Powered Redaction</span></h1>
+                    <p class="hero-subtitle">
+                        Securely redact SSNs, emails, phone numbers, and custom patterns from your PDFs. 
+                        Your documents never leave your browser — complete privacy guaranteed.
+                    </p>
+                    <div class="hero-actions">
+                        <button id="hero-get-started" class="primary-btn lg-btn">
+                            <i class="fa-solid fa-rocket"></i> Get Started Free
+                        </button>
+                        <a href="#how-it-works" class="secondary-btn lg-btn">
+                            <i class="fa-solid fa-play-circle"></i> See How It Works
+                        </a>
+                    </div>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">10K+</span>
+                            <span class="stat-label">Documents Redacted</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Privacy Guaranteed</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">50+</span>
+                            <span class="stat-label">Pattern Types</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-card card-1">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>Upload PDF</span>
+                    </div>
+                    <div class="floating-card card-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Auto Detect</span>
+                    </div>
+                    <div class="floating-card card-3">
+                        <i class="fa-solid fa-lock"></i>
+                        <span>Secure Redact</span>
+                    </div>
+                    <div class="hero-mockup">
+                        <div class="mockup-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <div class="mockup-content">
+                            <div class="mockup-line redacted"></div>
+                            <div class="mockup-line"></div>
+                            <div class="mockup-line redacted short"></div>
+                            <div class="mockup-line"></div>
+                            <div class="mockup-line redacted"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Login Screen Gate -->
-        <div id="login-screen" class="login-screen">
-            <div class="login-card">
-                <i class="fa-solid fa-lock login-icon"></i>
-                <h2>Authentication Required</h2>
-                <p>Please sign in to access the secure redaction tools and your custom patterns.</p>
-                <button id="main-login-btn" class="primary-btn"><i class="fa-brands fa-google"></i> Sign In with
-                    Google</button>
-            </div>
-        </div>
+            <!-- Features Section -->
+            <section class="features-section" id="features">
+                <div class="section-header">
+                    <h2>Why Choose SecureRedact?</h2>
+                    <p>Enterprise-grade redaction with uncompromising privacy</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3>100% Privacy</h3>
+                        <p>Your documents are processed entirely in your browser. No data is ever uploaded to our servers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <h3>Lightning Fast</h3>
+                        <p>AI-powered pattern recognition instantly identifies and redacts sensitive information.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-code"></i>
+                        </div>
+                        <h3>Custom Patterns</h3>
+                        <p>Create your own regex patterns or use our AI to generate patterns from sample text.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <h3>Batch Processing</h3>
+                        <p>Process multiple PDFs at once. Perfect for bulk document redaction workflows.</p>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Main App Content (Hidden by default) -->
+            <!-- How It Works Section -->
+            <section class="how-it-works-section" id="how-it-works">
+                <div class="section-header">
+                    <h2>How It Works</h2>
+                    <p>Redact sensitive information in just 3 simple steps</p>
+                </div>
+                <div class="steps-container">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <div class="step-icon">
+                            <i class="fa-solid fa-cloud-arrow-up"></i>
+                        </div>
+                        <h3>Upload Your PDF</h3>
+                        <p>Drag and drop your documents or click to browse. We support single files or batch uploads.</p>
+                    </div>
+                    <div class="step-connector">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <div class="step-icon">
+                            <i class="fa-solid fa-sliders"></i>
+                        </div>
+                        <h3>Select Patterns</h3>
+                        <p>Choose from built-in patterns (SSN, email, phone) or create custom ones with our AI assistant.</p>
+                    </div>
+                    <div class="step-connector">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <div class="step-icon">
+                            <i class="fa-solid fa-download"></i>
+                        </div>
+                        <h3>Download Securely</h3>
+                        <p>Get your redacted PDF instantly. Original content is permanently removed, not just hidden.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pricing Preview Section -->
+            <section class="pricing-preview-section" id="pricing">
+                <div class="section-header">
+                    <h2>Simple, Transparent Pricing</h2>
+                    <p>Start with a free trial. Upgrade anytime.</p>
+                </div>
+                <div class="pricing-preview-grid">
+                    <div class="pricing-preview-card">
+                        <h3>Free Trial</h3>
+                        <div class="preview-price">$0</div>
+                        <ul class="preview-features">
+                            <li><i class="fa-solid fa-check"></i> 1 Document</li>
+                            <li><i class="fa-solid fa-check"></i> All Patterns</li>
+                            <li><i class="fa-solid fa-check"></i> Full Privacy</li>
+                        </ul>
+                        <button id="pricing-get-started" class="secondary-btn">Try Free</button>
+                    </div>
+                    <div class="pricing-preview-card featured">
+                        <div class="featured-badge">Most Popular</div>
+                        <h3>Pro</h3>
+                        <div class="preview-price">$19.99<span>/mo</span></div>
+                        <ul class="preview-features">
+                            <li><i class="fa-solid fa-check"></i> 1,000 Documents/mo</li>
+                            <li><i class="fa-solid fa-check"></i> Custom Patterns</li>
+                            <li><i class="fa-solid fa-check"></i> 24/7 Support</li>
+                        </ul>
+                        <a href="/pricing" class="primary-btn">Choose Pro</a>
+                    </div>
+                    <div class="pricing-preview-card">
+                        <h3>Enterprise</h3>
+                        <div class="preview-price">$49.99<span>/mo</span></div>
+                        <ul class="preview-features">
+                            <li><i class="fa-solid fa-check"></i> Unlimited Documents</li>
+                            <li><i class="fa-solid fa-check"></i> API Access</li>
+                            <li><i class="fa-solid fa-check"></i> Dedicated Support</li>
+                        </ul>
+                        <a href="/pricing" class="secondary-btn">Contact Sales</a>
+                    </div>
+                </div>
+                <div class="pricing-cta">
+                    <a href="/pricing" class="text-btn">View All Plans <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </section>
+
+            <!-- Trust Section -->
+            <section class="trust-section">
+                <div class="trust-content">
+                    <div class="trust-item">
+                        <i class="fa-solid fa-lock"></i>
+                        <div>
+                            <h4>End-to-End Encryption</h4>
+                            <p>Your data never leaves your device</p>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fa-solid fa-server"></i>
+                        <div>
+                            <h4>Zero Server Storage</h4>
+                            <p>We never save your documents</p>
+                        </div>
+                    </div>
+                    <div class="trust-item">
+                        <i class="fa-solid fa-certificate"></i>
+                        <div>
+                            <h4>GDPR Compliant</h4>
+                            <p>Full regulatory compliance</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Final CTA -->
+            <section class="final-cta-section">
+                <h2>Ready to Protect Your Documents?</h2>
+                <p>Join thousands of professionals who trust SecureRedact for their sensitive documents.</p>
+                <button id="final-get-started" class="primary-btn lg-btn">
+                    <i class="fa-brands fa-google"></i> Get Started with Google
+                </button>
+            </section>
+        </div>
+        <!-- End Landing Content -->
+
+        <!-- ========== MAIN APP CONTENT (Hidden by default) ========== -->
         <div id="app-content" style="display: none;">
+            <div class="header">
+                <h1>Secure PDF Redactor</h1>
+                <p>Protect sensitive information with local regex-based redaction</p>
+            </div>
+
             <main>
                 <div class="upload-area" id="drop-zone">
                     <div class="icon-container">

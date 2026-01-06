@@ -71,6 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const loginScreen = document.getElementById('login-screen');
     const appContent = document.getElementById('app-content');
 
+    // Landing Page Elements
+    const landingContent = document.getElementById('landing-content');
+    const heroGetStarted = document.getElementById('hero-get-started');
+    const pricingGetStarted = document.getElementById('pricing-get-started');
+    const finalGetStarted = document.getElementById('final-get-started');
+
     let currentUser = null;
     let customPatterns = {};
     let previousLimit = -1;
@@ -147,29 +153,38 @@ document.addEventListener('DOMContentLoaded', () => {
     if (loginBtn) loginBtn.addEventListener('click', signIn);
     if (mainLoginBtn) mainLoginBtn.addEventListener('click', signIn);
 
-    logoutBtn.addEventListener('click', () => {
-        auth.signOut();
-    });
+    // Landing Page CTA Buttons
+    if (heroGetStarted) heroGetStarted.addEventListener('click', signIn);
+    if (pricingGetStarted) pricingGetStarted.addEventListener('click', signIn);
+    if (finalGetStarted) finalGetStarted.addEventListener('click', signIn);
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            auth.signOut();
+        });
+    }
 
     auth.onAuthStateChanged(user => {
         currentUser = user;
         if (user) {
-            // Logged In
-            loginScreen.style.display = 'none';
-            appContent.style.display = 'block';
+            // Logged In - Show App Content, Hide Landing
+            if (landingContent) landingContent.style.display = 'none';
+            if (loginScreen) loginScreen.style.display = 'none';
+            if (appContent) appContent.style.display = 'block';
 
             if (loginBtn) loginBtn.style.display = 'none';
-            userInfo.style.display = 'flex';
-            userNameSpan.textContent = user.displayName;
-            userAvatar.src = user.photoURL;
+            if (userInfo) userInfo.style.display = 'flex';
+            if (userNameSpan) userNameSpan.textContent = user.displayName;
+            if (userAvatar) userAvatar.src = user.photoURL;
             loadCustomPatternsFromFirestore();
         } else {
-            // Logged Out
-            loginScreen.style.display = 'flex'; // GATE OPEN
-            appContent.style.display = 'none';
+            // Logged Out - Show Landing Page
+            if (landingContent) landingContent.style.display = 'block';
+            if (loginScreen) loginScreen.style.display = 'none'; // Old login screen hidden
+            if (appContent) appContent.style.display = 'none';
 
             if (loginBtn) loginBtn.style.display = 'block';
-            userInfo.style.display = 'none';
+            if (userInfo) userInfo.style.display = 'none';
 
             // Fix: Hide Dashboard & Reset State
             const dashboard = document.getElementById('usage-dashboard');
