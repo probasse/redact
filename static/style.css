@@ -572,8 +572,8 @@ header p {
 
 .pricing-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 24px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
     margin-top: 2rem;
 }
 
@@ -936,9 +936,17 @@ footer {
     border-radius: 50%;
 }
 
-.dot.red { background: #ff5f57; }
-.dot.yellow { background: #ffbd2e; }
-.dot.green { background: #28ca42; }
+.dot.red {
+    background: #ff5f57;
+}
+
+.dot.yellow {
+    background: #ffbd2e;
+}
+
+.dot.green {
+    background: #28ca42;
+}
 
 .mockup-content {
     padding: 24px;
@@ -963,8 +971,15 @@ footer {
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
 }
 
 /* Floating Cards */
@@ -1007,8 +1022,15 @@ footer {
 }
 
 @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 /* Section Headers */
@@ -1170,10 +1192,11 @@ footer {
 
 .pricing-preview-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    max-width: 900px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 16px;
+    max-width: 1200px;
     margin: 0 auto;
+    justify-content: center;
 }
 
 .pricing-preview-card {
@@ -1358,17 +1381,17 @@ footer {
     .features-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .hero-section {
         grid-template-columns: 1fr;
         gap: 3rem;
     }
-    
+
     .hero-visual {
         order: -1;
         height: 350px;
     }
-    
+
     .hero-title {
         font-size: 2.75rem;
     }
@@ -1379,104 +1402,104 @@ footer {
         padding: 2rem 0;
         min-height: auto;
     }
-    
+
     .hero-title {
         font-size: 2.25rem;
     }
-    
+
     .hero-subtitle {
         font-size: 1rem;
     }
-    
+
     .hero-actions {
         flex-direction: column;
     }
-    
+
     .hero-actions .primary-btn,
     .hero-actions .secondary-btn {
         width: 100%;
         justify-content: center;
     }
-    
+
     .hero-stats {
         flex-wrap: wrap;
         gap: 1.5rem;
     }
-    
+
     .hero-visual {
         height: 280px;
     }
-    
+
     .hero-mockup {
         width: 260px;
         height: 320px;
     }
-    
+
     .floating-card {
         display: none;
     }
-    
+
     .features-section,
     .how-it-works-section,
     .pricing-preview-section {
         padding: 3rem 0;
     }
-    
+
     .features-grid {
         grid-template-columns: 1fr;
         gap: 16px;
     }
-    
+
     .feature-card {
         padding: 1.5rem;
     }
-    
+
     .section-header h2 {
         font-size: 1.75rem;
     }
-    
+
     .steps-container {
         flex-direction: column;
         gap: 1.5rem;
     }
-    
+
     .step-connector {
         transform: rotate(90deg);
     }
-    
+
     .step-card {
         max-width: 100%;
     }
-    
+
     .pricing-preview-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
     }
-    
+
     .pricing-preview-card.featured {
         transform: none;
     }
-    
+
     .pricing-preview-card.featured:hover {
         transform: translateY(-5px);
     }
-    
+
     .trust-content {
         flex-direction: column;
         gap: 1.5rem;
         align-items: center;
         text-align: center;
     }
-    
+
     .trust-item {
         flex-direction: column;
         gap: 0.5rem;
     }
-    
+
     .final-cta-section {
         padding: 3rem 1.5rem;
     }
-    
+
     .final-cta-section h2 {
         font-size: 1.75rem;
     }

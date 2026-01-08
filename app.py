@@ -102,7 +102,7 @@ def check_usage():
              'email': 'unknown', # Should fetch from auth user record if needed
              'subscriptionStatus': 'none',
              'usageCount': 0,
-             'usageLimit': 1, # Free trial: 1 doc
+             'usageLimit': 5, # Free trial: 5 docs
              'planId': 'free'
         }
         user_ref.set(user_data)
@@ -284,14 +284,14 @@ def handle_checkout_session(session):
         price_id = sub['items']['data'][0]['price']['id']
         print(f"DEBUG: Retrieved Price ID: {price_id}")
         
-        limit = 50 # Default Starter
+        limit = 50 # Default Starter (50 docs)
         plan_name = "Starter"
         
         if price_id == os.getenv('PRICE_ID_LITE'):
             limit = 100
             plan_name = "Lite"
         elif price_id == os.getenv('PRICE_ID_PRO'):
-            limit = 1000
+            limit = 10000
             plan_name = "Pro"
         elif price_id == os.getenv('PRICE_ID_ENTERPRISE'):
             limit = 999999
@@ -391,7 +391,7 @@ def handle_sub_deleted(sub):
     for user in users:
         user.reference.update({
             'subscriptionStatus': 'canceled',
-            'usageLimit': 1, # Revert to free
+            'usageLimit': 5, # Revert to free
             'planId': 'free'
         })
 

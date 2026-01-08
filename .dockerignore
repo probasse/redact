@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv
+
+# Large Files
+*.tar
+*.gz
+*.zip
+redact_app_update.tar
+
+# App Data (Mounted)
+uploads/
+
+# IDEs
+.vscode/
+.idea/
+
+# OS
+.DS_Store
