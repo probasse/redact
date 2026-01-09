@@ -1,0 +1,42 @@
+version: "1.0.0"
+release_date: "2026-01-09"
+
+release_notes:
+  - version: "1.0.0"
+    date: "2026-01-09"
+    title: "Initial Release"
+    highlights:
+      - "Professional landing page with hero, features, and pricing sections"
+      - "Subscription-based pricing with Stripe integration"
+      - "Docker support for production deployment"
+      - "Dark mode theme support"
+    changes:
+      added:
+        - "Core document redaction functionality"
+        - "Professional landing page redesign with modern UI"
+        - "Stripe checkout integration for subscriptions"
+        - "Free tier with 5 document limit"
+        - "Docker and Docker Compose configuration"
+        - "Firestore database integration"
+        - "Theme toggle with dark mode support"
+        - "Tax Estimator link in footer"
+      changed:
+        - "Optimized Docker deployment with Gunicorn"
+        - "Separate environment configurations for testing and production"
+      fixed:
+        - "Theme toggle visibility in dark mode"
+        - "Navigation links updated"
+    breaking_changes: []
+
+  # Template for future releases:
+  # - version: "X.X.X"
+  #   date: "YYYY-MM-DD"
+  #   title: "Release Title"
+  #   highlights: []
+  #   changes:
+  #     added: []
+  #     changed: []
+  #     fixed: []
+  #     deprecated: []
+  #     removed: []
+  #   breaking_changes: []

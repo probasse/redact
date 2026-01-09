@@ -5,6 +5,7 @@ import time
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
 import stripe
+import yaml
 from dotenv import load_dotenv
 
 # Load Environment Variables
@@ -76,6 +77,17 @@ def pricing():
                            price_id_pro=os.getenv('PRICE_ID_PRO'),
                            price_id_enterprise=os.getenv('PRICE_ID_ENTERPRISE'),
                            stripe_publishable_key=os.getenv('STRIPE_PUBLISHABLE_KEY'))
+
+@app.route('/changelog')
+def changelog():
+    version_data = {}
+    try:
+        with open('version.yaml', 'r') as f:
+            version_data = yaml.safe_load(f)
+    except Exception as e:
+        print(f"Error loading version.yaml: {e}")
+        version_data = {'version': 'unknown', 'release_notes': []}
+    return render_template('changelog.html', version_data=version_data)
 
 # --- Gatekeeper Logic ---
 @app.route('/api/check-usage', methods=['POST'])

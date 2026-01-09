@@ -4,9 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SecureRedact - AI-Powered PDF Redaction</title>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TDQZ8B7C');</script>
+    <!-- End Google Tag Manager -->
+    <title>SecureRedact - RegEx-Powered PDF Redaction</title>
     <meta name="description"
-        content="Protect sensitive information with AI-powered PDF redaction. 100% client-side processing - your data never leaves your browser.">
+        content="Protect sensitive information with RegEx-powered PDF redaction. 100% client-side processing - your data never leaves your browser.">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!-- Google Fonts for premium typography -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,9 +35,30 @@
         // Set worker source for PDF.js
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
     </script>
+
+    <!-- TikTok Pixel Code Start -->
+    <script>
+        !function (w, d, t) {
+            w.TiktokAnalyticsObject = t; var ttq = w[t] = w[t] || []; ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"], ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } }; for (var i = 0; i < ttq.methods.length; i++)ttq.setAndDefer(ttq, ttq.methods[i]); ttq.instance = function (t) {
+                for (
+                    var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++)ttq.setAndDefer(e, ttq.methods[n]); return e
+            }, ttq.load = function (e, n) {
+                var r = "https://analytics.tiktok.com/i18n/pixel/events.js", o = n && n.partner; ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = r, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {}; n = document.createElement("script")
+                    ; n.type = "text/javascript", n.async = !0, n.src = r + "?sdkid=" + e + "&lib=" + t; e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(n, e)
+            };
+
+            ttq.load('D5GGPFRC77U2LQ3IMH30');
+            ttq.page();
+        }(window, document, 'ttq');
+    </script>
+    <!-- TikTok Pixel Code End -->
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQZ8B7C" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <div class="container">
         <!-- Auth Header -->
         <header class="app-header">
@@ -58,7 +89,7 @@
                 </div>
                 <!-- Theme Toggle -->
                 <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
-                    <i class="fa-solid fa-sun-bright"></i> <!-- Default to Sun (for dark mode) -->
+                    <i class="fa-solid fa-sun"></i> <!-- Default to Sun (for dark mode) -->
                 </button>
                 <button id="login-btn" class="primary-btn sm-btn"><i class="fa-brands fa-google"></i> Sign In</button>
             </div>
@@ -72,7 +103,7 @@
                     <div class="hero-badge">
                         <i class="fa-solid fa-shield-check"></i> 100% Client-Side Processing
                     </div>
-                    <h1 class="hero-title">Protect Sensitive Information with <span class="gradient-text">AI-Powered
+                    <h1 class="hero-title">Protect Sensitive Information with <span class="gradient-text">RegEx-Powered
                             Redaction</span></h1>
                     <p class="hero-subtitle">
                         Securely redact SSNs, emails, phone numbers, and custom patterns from your PDFs.
@@ -151,14 +182,14 @@
                             <i class="fa-solid fa-bolt"></i>
                         </div>
                         <h3>Lightning Fast</h3>
-                        <p>AI-powered pattern recognition instantly identifies and redacts sensitive information.</p>
+                        <p>Powerful pattern recognition instantly identifies and redacts sensitive information.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
                             <i class="fa-solid fa-code"></i>
                         </div>
                         <h3>Custom Patterns</h3>
-                        <p>Create your own regex patterns or use our AI to generate patterns from sample text.</p>
+                        <p>Create your own regex patterns or use our generator to build patterns from sample text.</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
@@ -195,7 +226,7 @@
                             <i class="fa-solid fa-sliders"></i>
                         </div>
                         <h3>Select Patterns</h3>
-                        <p>Choose from built-in patterns (SSN, email, phone) or create custom ones with our AI
+                        <p>Choose from built-in patterns (SSN, email, phone) or create custom ones with our regex
                             assistant.</p>
                     </div>
                     <div class="step-connector">
@@ -262,9 +293,6 @@
                         <a href="/pricing" class="secondary-btn">Contact Sales</a>
                     </div>
                 </div>
-                <div class="pricing-cta">
-                    <a href="/pricing" class="text-btn">View All Plans <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
             </section>
 
             <!-- Trust Section -->
@@ -301,6 +329,11 @@
                 <button id="final-get-started" class="primary-btn lg-btn">
                     <i class="fa-brands fa-google"></i> Get Started with Google
                 </button>
+                <div style="margin-top: 1.5rem;">
+                    <a href="/changelog" class="text-btn">
+                        <i class="fa-solid fa-sparkles"></i> What's New
+                    </a>
+                </div>
             </section>
         </div>
         <!-- End Landing Content -->

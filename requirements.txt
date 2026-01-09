@@ -5,3 +5,4 @@ stripe==7.9.0
 firebase-admin==6.4.0
 requests==2.31.0
 gunicorn==21.2.0
+pyyaml==6.0.1

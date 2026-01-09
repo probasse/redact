@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TDQZ8B7C');</script>
+    <!-- End Google Tag Manager -->
+    <title>Changelog - SecureRedact</title>
+    <meta name="description"
+        content="See what's new in SecureRedact. View our latest features, improvements, and bug fixes.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- TikTok Pixel Code Start -->
+    <script>
+        !function (w, d, t) {
+            w.TiktokAnalyticsObject = t; var ttq = w[t] = w[t] || []; ttq.methods = ["page", "track", "identify", "instances", "debug", "on", "off", "once", "ready", "alias", "group", "enableCookie", "disableCookie", "holdConsent", "revokeConsent", "grantConsent"], ttq.setAndDefer = function (t, e) { t[e] = function () { t.push([e].concat(Array.prototype.slice.call(arguments, 0))) } }; for (var i = 0; i < ttq.methods.length; i++)ttq.setAndDefer(ttq, ttq.methods[i]); ttq.instance = function (t) {
+                for (
+                    var e = ttq._i[t] || [], n = 0; n < ttq.methods.length; n++)ttq.setAndDefer(e, ttq.methods[n]); return e
+            }, ttq.load = function (e, n) {
+                var r = "https://analytics.tiktok.com/i18n/pixel/events.js", o = n && n.partner; ttq._i = ttq._i || {}, ttq._i[e] = [], ttq._i[e]._u = r, ttq._t = ttq._t || {}, ttq._t[e] = +new Date, ttq._o = ttq._o || {}, ttq._o[e] = n || {}; n = document.createElement("script")
+                    ; n.type = "text/javascript", n.async = !0, n.src = r + "?sdkid=" + e + "&lib=" + t; e = document.getElementsByTagName("script")[0]; e.parentNode.insertBefore(n, e)
+            };
+
+            ttq.load('D5GGPFRC77U2LQ3IMH30');
+            ttq.page();
+        }(window, document, 'ttq');
+    </script>
+    <!-- TikTok Pixel Code End -->
+
+    <style>
+        /* Changelog-specific styles */
+        .changelog-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .changelog-hero {
+            text-align: center;
+            padding: 3rem 0 4rem;
+            position: relative;
+        }
+
+        .changelog-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, var(--md-sys-color-primary) 0%, transparent 70%);
+            opacity: 0.15;
+            filter: blur(60px);
+            z-index: -1;
+        }
+
+        .changelog-hero h1 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--md-sys-color-on-background) 0%, var(--md-sys-color-primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .changelog-hero p {
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 1.125rem;
+        }
+
+        .current-version {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--md-sys-color-primary-container);
+            color: var(--md-sys-color-on-primary-container);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-weight: 500;
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .current-version i {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--md-sys-color-primary), var(--md-sys-color-outline-variant));
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.5s ease-out both;
+        }
+
+        .timeline-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .timeline-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .timeline-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .timeline-node {
+            position: absolute;
+            left: -40px;
+            top: 0;
+            width: 26px;
+            height: 26px;
+            background: var(--md-sys-color-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 0 4px var(--md-sys-color-background), 0 0 20px rgba(176, 198, 255, 0.4);
+        }
+
+        .timeline-node i {
+            color: var(--md-sys-color-on-primary);
+            font-size: 0.75rem;
+        }
+
+        /* Version Card */
+        .version-card {
+            background: var(--md-sys-color-surface-2);
+            border-radius: var(--md-sys-shape-corner-extra-large);
+            padding: 2rem;
+            border: 1px solid var(--md-sys-color-outline-variant);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .version-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .version-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .version-badge {
+            background: linear-gradient(135deg, var(--md-sys-color-primary) 0%, #8b5cf6 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-weight: 600;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .version-badge i {
+            font-size: 0.875rem;
+        }
+
+        .version-date {
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .version-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 1rem;
+        }
+
+        /* Highlights */
+        .highlights-section {
+            background: var(--md-sys-color-surface-3);
+            border-radius: var(--md-sys-shape-corner-large);
+            padding: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .highlights-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--md-sys-color-on-surface-variant);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .highlights-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .highlight-chip {
+            background: var(--md-sys-color-surface-5);
+            color: var(--md-sys-color-on-surface);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .highlight-chip i {
+            color: var(--md-sys-color-primary);
+            font-size: 0.75rem;
+        }
+
+        /* Changes Categories */
+        .changes-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .change-category {
+            padding: 1rem;
+            border-radius: var(--md-sys-shape-corner-medium);
+            background: var(--md-sys-color-surface-1);
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 0.75rem;
+        }
+
+        .category-badge {
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-added .category-badge {
+            background: rgba(46, 160, 67, 0.15);
+            color: #4ade80;
+        }
+
+        .category-changed .category-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+        }
+
+        .category-fixed .category-badge {
+            background: rgba(251, 146, 60, 0.15);
+            color: #fb923c;
+        }
+
+        .change-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .change-list li {
+            position: relative;
+            padding-left: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .change-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .category-added .change-list li::before {
+            background: #4ade80;
+        }
+
+        .category-changed .change-list li::before {
+            background: #60a5fa;
+        }
+
+        .category-fixed .change-list li::before {
+            background: #fb923c;
+        }
+
+        /* Footer */
+        .changelog-footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--md-sys-color-on-surface-variant);
+            font-size: 0.875rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            transition: gap 0.2s ease;
+        }
+
+        .back-link:hover {
+            gap: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .changelog-hero h1 {
+                font-size: 2rem;
+            }
+
+            .timeline {
+                padding-left: 30px;
+            }
+
+            .timeline::before {
+                left: 8px;
+            }
+
+            .timeline-node {
+                left: -30px;
+                width: 20px;
+                height: 20px;
+            }
+
+            .version-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TDQZ8B7C" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="logo">
+                <a href="/"
+                    style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 10px;">
+                    <i class="fa-solid fa-user-secret"></i> SecureRedact
+                </a>
+            </div>
+            <div class="auth-container">
+                <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+                    <i class="fa-solid fa-sun"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="changelog-container">
+            <!-- Hero -->
+            <div class="changelog-hero">
+                <div class="current-version">
+                    <i class="fa-solid fa-circle"></i>
+                    Current Version: {{ version_data.version }}
+                </div>
+                <h1>What's New</h1>
+                <p>Stay up to date with the latest features and improvements</p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                {% for release in version_data.release_notes %}
+                <div class="timeline-item">
+                    <div class="timeline-node">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+
+                    <div class="version-card">
+                        <div class="version-header">
+                            <span class="version-badge">
+                                <i class="fa-solid fa-tag"></i>
+                                v{{ release.version }}
+                            </span>
+                            <span class="version-date">
+                                <i class="fa-regular fa-calendar"></i>
+                                {{ release.date }}
+                            </span>
+                        </div>
+
+                        <h2 class="version-title">{{ release.title }}</h2>
+
+                        {% if release.highlights %}
+                        <div class="highlights-section">
+                            <div class="highlights-title">
+                                <i class="fa-solid fa-sparkles"></i>
+                                Highlights
+                            </div>
+                            <div class="highlights-list">
+                                {% for highlight in release.highlights %}
+                                <span class="highlight-chip">
+                                    <i class="fa-solid fa-star"></i>
+                                    {{ highlight }}
+                                </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="changes-grid">
+                            {% if release.changes.added %}
+                            <div class="change-category category-added">
+                                <div class="category-header">
+                                    <span class="category-badge">
+                                        <i class="fa-solid fa-plus"></i> Added
+                                    </span>
+                                </div>
+                                <ul class="change-list">
+                                    {% for item in release.changes.added %}
+                                    <li>{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                            {% if release.changes.changed %}
+                            <div class="change-category category-changed">
+                                <div class="category-header">
+                                    <span class="category-badge">
+                                        <i class="fa-solid fa-arrows-rotate"></i> Changed
+                                    </span>
+                                </div>
+                                <ul class="change-list">
+                                    {% for item in release.changes.changed %}
+                                    <li>{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+
+                            {% if release.changes.fixed %}
+                            <div class="change-category category-fixed">
+                                <div class="category-header">
+                                    <span class="category-badge">
+                                        <i class="fa-solid fa-wrench"></i> Fixed
+                                    </span>
+                                </div>
+                                <ul class="change-list">
+                                    {% for item in release.changes.fixed %}
+                                    <li>{{ item }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Footer -->
+            <div class="changelog-footer">
+                <a href="/" class="back-link">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    Back to SecureRedact
+                </a>
+                <p>More updates coming soon!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle (same as main site)
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'light') {
+            body.classList.add('light-mode');
+            themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            themeToggle.innerHTML = isLight ? '<i class="fa-solid fa-moon"></i>' : '<i class="fa-solid fa-sun"></i>';
+        });
+    </script>
+</body>
+
+</html>

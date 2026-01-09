@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isLight) {
             icon.className = 'fa-solid fa-moon'; // Show moon to switch to dark
         } else {
-            icon.className = 'fa-solid fa-sun-bright'; // Show sun to switch to light
+            icon.className = 'fa-solid fa-sun'; // Show sun to switch to light
         }
     }
 
@@ -143,10 +143,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Helper: Sign In ---
     const signIn = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
-        auth.signInWithPopup(provider).catch(error => {
-            console.error("Auth Error:", error);
-            alert("Login Failed: " + error.message);
-        });
+        auth.signInWithPopup(provider)
+            .then((result) => {
+                // Track successful sign-in with TikTok Pixel
+                if (typeof ttq !== 'undefined') {
+                    ttq.track('CompleteRegistration', {
+                        content_name: 'Google Sign-In'
+                    });
+                }
+            })
+            .catch(error => {
+                console.error("Auth Error:", error);
+                alert("Login Failed: " + error.message);
+            });
     };
 
     // --- Authentication Logic ---
@@ -300,6 +309,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 // If we detect a paid plan limit (Starter is 50), confirm success
                 if (limit >= 50) {
                     showToast(`Subscription Ready! Limit is ${limit} docs.`, "success");
+
+                    // Track successful subscription with TikTok Pixel
+                    if (typeof ttq !== 'undefined') {
+                        ttq.track('Subscribe', {
+                            content_name: planName,
+                            value: limit,
+                            currency: 'USD'
+                        });
+                    }
+
                     isVerifyingPayment = false;
                 }
                 // Otherwise maintain isVerifyingPayment=true and wait for the next snapshot update
